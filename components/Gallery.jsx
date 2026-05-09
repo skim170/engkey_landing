@@ -3,9 +3,9 @@ function Gallery() {
     {
       key: "show",
       label: "Show Word",
-      sub: "단어 제시 + 오디오",
+      sub: "단어 제시 + 미국식 발음",
       title: "단어를 듣고 보기",
-      desc: "단어와 함께 그림과 발음을 동시에 제공해 자연스럽게 어휘를 익히게 합니다.",
+      desc: "단어와 함께 그림, 미국식 발음 음성을 동시에 제공해 자연스럽게 어휘를 익히게 합니다.",
       age: "5세 이상",
       bg: "bg-pink",
       render: () => (
@@ -21,7 +21,7 @@ function Gallery() {
       label: "Guided Speak",
       sub: "따라 말하기",
       title: "듣고 따라 말하기",
-      desc: "예문을 듣고 아이가 직접 따라 말하며 자연스럽게 영어 표현에 익숙해집니다.",
+      desc: "미국식 발음의 예문을 듣고 아이가 직접 따라 말하며 자연스럽게 영어 표현에 익숙해집니다.",
       age: "6세 이상",
       bg: "bg-mint",
       render: () => (
@@ -102,7 +102,7 @@ function Gallery() {
   const a = activities[active];
 
   return (
-    <section className="section section--ivory" id="gallery">
+    <section className="section section--ivory gallery" id="gallery">
       <div className="container">
         <div className="reveal">
           <span className="eyebrow">Activity Gallery</span>

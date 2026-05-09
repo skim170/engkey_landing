@@ -2,61 +2,67 @@ function AgeTabs() {
   const ages = [
     {
       key: 5, label: "5세",
-      desc: "단어 인식 + 간단한 패턴. 시각·청각을 동시에 활용한 어휘 확장.",
+      titleLabel: "5세",
+      desc: "촉감과 모양을 표현하는 형용사 중심. 한 단어를 보고 듣고 선택하는 활동으로 시작합니다.",
       stats: [
-        { lbl: "주간 학습 어휘", val: "18 words" },
+        { lbl: "1주차 학습 어휘", val: "15 words" },
         { lbl: "활동 1회 시간", val: "10–12 min" },
       ],
       activities: [
         { name: "Show Word" },
+        { name: "Guided Speak", isNew: true },
+        { name: "Listen & Choose" },
         { name: "Find Word" },
-        { name: "Match Pair" },
         { name: "Sticker Reward" },
       ],
       sample: [
-        { en: "happy / sad", kr: "행복한 / 슬픈" },
-        { en: "big / small", kr: "큰 / 작은" },
-        { en: "I like cats.", kr: "나는 고양이를 좋아해요." },
+        "fluffy",
+        "furry",
+        "hairy",
+        "scaly",
+        "wet",
+        "dry",
+        "smooth",
+        "bumpy",
+        "spiky",
+        "round",
+        "flat",
+        "long",
+        "short",
+        "big",
+        "small",
       ],
     },
     {
-      key: 6, label: "6세",
-      desc: "단어에서 짧은 문장으로 확장. 듣고 따라 말하기·단어 찾기·철자 활동을 함께 구성합니다.",
+      key: "6-7", label: "6·7세",
+      titleLabel: "6·7세 통합",
+      desc: "형용사와 동물 명사를 결합한 짧은 어구. 크기·형태 표현을 자연스럽게 말하고 찾습니다.",
       stats: [
-        { lbl: "주간 학습 어휘", val: "24 words" },
+        { lbl: "1주차 학습 어휘", val: "15 phrases" },
         { lbl: "활동 1회 시간", val: "12–14 min" },
       ],
       activities: [
-        { name: "Show Word" },
+        { name: "Show Phrase" },
         { name: "Guided Speak", isNew: true },
-        { name: "Unscramble", isNew: true },
-        { name: "Find Word" },
+        { name: "Find Phrase" },
         { name: "Sticker Reward" },
       ],
       sample: [
-        { en: "I have a pencil.", kr: "나는 연필이 있어요." },
-        { en: "Where is the cat?", kr: "고양이는 어디 있어요?" },
-        { en: "It's red.", kr: "그것은 빨간색이에요." },
-      ],
-    },
-    {
-      key: 7, label: "7세",
-      desc: "문장 단위 따라 말하기와 읽기·쓰기 기초. 학교 영어 진입을 위한 단계.",
-      stats: [
-        { lbl: "주간 학습 어휘", val: "30 words" },
-        { lbl: "활동 1회 시간", val: "13–15 min" },
-      ],
-      activities: [
-        { name: "Show Word" },
-        { name: "Guided Speak" },
-        { name: "Unscramble" },
-        { name: "Sentence Build", isNew: true },
-        { name: "Sticker Reward" },
-      ],
-      sample: [
-        { en: "I am going to school.", kr: "나는 학교에 가고 있어요." },
-        { en: "She likes apples.", kr: "그녀는 사과를 좋아해요." },
-        { en: "What day is it today?", kr: "오늘은 무슨 요일이에요?" },
+        "big dog",
+        "small cat",
+        "tiny bird",
+        "tall giraffe",
+        "short pig",
+        "long snake",
+        "fat bear",
+        "thin deer",
+        "huge elephant",
+        "little rabbit",
+        "giant whale",
+        "mini frog",
+        "wide hippo",
+        "slim fox",
+        "round owl",
       ],
     },
   ];
@@ -69,9 +75,9 @@ function AgeTabs() {
       <div className="container">
         <div className="reveal">
           <span className="eyebrow">Age Programs</span>
-          <h2 className="section-title">연령별로 정교하게 설계된 3단계</h2>
+          <h2 className="section-title">연령별로 정교하게 설계된 프로그램</h2>
           <p className="section-subtitle">
-            아이의 발달 단계에 맞춰 어휘 양·문장 길이·활동 유형이 자연스럽게 확장됩니다.
+            5세 과정과 6·7세 통합 과정으로 1주차 어휘부터 단계적으로 확장됩니다.
           </p>
         </div>
         <div className="ages__nav reveal" role="tablist">
@@ -87,9 +93,9 @@ function AgeTabs() {
             </button>
           ))}
         </div>
-        <div className="ages__panel reveal" id={`age-panel-${a.key}`} role="tabpanel" key={a.key}>
+        <div className="ages__panel reveal" id={`age-panel-${a.key}`} role="tabpanel">
           <div>
-            <h3><span className="age-num">{a.label}</span> 프로그램</h3>
+            <h3><span className="age-num">{a.titleLabel}</span> 프로그램</h3>
             <p className="desc">{a.desc}</p>
             <div className="ages__stats">
               {a.stats.map(s => (
@@ -108,15 +114,12 @@ function AgeTabs() {
             </div>
           </div>
           <div className="ages__sample">
-            <h4>학습 샘플</h4>
-            <ul>
-              {a.sample.map(s => (
-                <li key={s.en}>
-                  <span className="en">{s.en}</span>
-                  <span className="kr">{s.kr}</span>
-                </li>
+            <h4>1주차 단어</h4>
+            <div className="ages__word-list">
+              {a.sample.map(word => (
+                <span key={word} className="ages__word-chip">{word}</span>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
       </div>

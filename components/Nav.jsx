@@ -15,9 +15,10 @@ function Nav() {
         </a>
         <div className="nav__links">
           <a href="#features">기능</a>
-          <a href="#how">도입 흐름</a>
-          <a href="#gallery">학습 활동</a>
-          <a href="#ages">연령별 프로그램</a>
+          <a href="#routine">매일 루틴</a>
+          <a href="#market-day">Market Day</a>
+          <a href="#pricing">가격</a>
+          <a href="#faq">FAQ</a>
           <a href="#contact">도입 문의</a>
         </div>
         <a href="#contact" className="btn btn--primary nav__cta">무료 데모 신청</a>

@@ -20,10 +20,14 @@ function App() {
       <Hero />
       <Problem />
       <Features />
+      <DailyRoutine />
       <HowItWorks />
+      <MarketDay />
+      <Pricing />
+      <ProofAssets />
       <Gallery />
       <AgeTabs />
-      <Testimonials />
+      <FAQ />
       <CTAForm />
       <Footer />
     </>
