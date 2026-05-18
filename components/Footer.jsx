@@ -1,4 +1,7 @@
 function Footer() {
+  const contactEmail = "chadoli28@naver.com";
+  const kakaoChannelUrl = "#";
+
   return (
     <footer className="footer">
       <div className="container">
@@ -23,18 +26,15 @@ function Footer() {
             <h4>Company</h4>
             <ul>
               <li><a href="#contact">도입 문의</a></li>
-              <li><a href="#">자주 묻는 질문</a></li>
-              <li><a href="#">파트너십</a></li>
-              <li><a href="#">채용</a></li>
+              <li><a href="#faq">자주 묻는 질문</a></li>
             </ul>
           </div>
           <div className="footer__col">
             <h4>Connect</h4>
             <ul>
-              <li><a href="mailto:hello@engkey.kr">hello@engkey.kr</a></li>
-              <li><a href="#">카카오톡 채널</a></li>
-              <li><a href="#">인스타그램</a></li>
-              <li><a href="#">블로그</a></li>
+              <li><a href={kakaoChannelUrl}>카카오채널</a></li>
+              <li><a href={`mailto:${contactEmail}`}>{contactEmail}</a></li>
+              <li><a href="#demo-form">문의폼</a></li>
             </ul>
           </div>
         </div>

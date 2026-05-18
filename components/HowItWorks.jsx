@@ -10,24 +10,43 @@ function HowItWorks() {
   return (
     <section className="section section--purple" id="how">
       <div className="container">
-        <div className="reveal" style={{textAlign: "center"}}>
-          <span className="eyebrow">How It Works</span>
-          <h2 className="section-title" style={{margin: "0 auto 16px"}}>도입부터 수업까지, 단 3단계</h2>
-          <p className="section-subtitle" style={{margin: "0 auto 64px"}}>
-            복잡한 셋업 없이 키오스크를 두는 즉시 운영을 시작할 수 있습니다.
-          </p>
-        </div>
-        <div className="steps">
-          {steps.map((s, i) => (
-            <div key={s.n} className="step reveal" style={{transitionDelay: `${i*120}ms`}}>
-              <div className="step__circle">
-                <span style={{fontSize: 48}}>{s.emoji}</span>
-                <span className="num">{s.n}</span>
-              </div>
-              <h3>{s.t}</h3>
-              <p>{s.d}</p>
+        <div className="how__layout">
+          <div className="how__left">
+            <div className="reveal">
+              <span className="eyebrow">How It Works</span>
+              <h2 className="section-title" style={{margin: "0 0 12px"}}>도입부터 수업까지, 단 3단계</h2>
+              <p className="section-subtitle" style={{margin: "0 0 48px"}}>
+                복잡한 셋업 없이 키오스크를 두는 즉시 운영을 시작할 수 있습니다.
+              </p>
             </div>
-          ))}
+            <div className="how__steps">
+              {steps.map((s, i) => (
+                <div key={s.n} className="how-step reveal" style={{transitionDelay: `${i*120}ms`}}>
+                  <div className="how-step__circle">
+                    <span style={{fontSize: 32}}>{s.emoji}</span>
+                    <span className="how-step__num">{s.n}</span>
+                  </div>
+                  <div className="how-step__body">
+                    <h3>{s.t}</h3>
+                    <p>{s.d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <figure className="how__photo reveal" aria-label="교실에 배치된 Engkey 태블릿 키오스크">
+            <img
+              src="assets/images/kiosk_in_class-rotated-display.jpg"
+              alt="어린이집 교실에 배치된 Engkey 태블릿 키오스크"
+              loading="lazy"
+              onError={(event) => {
+                const frame = event.currentTarget.closest(".how__photo");
+                if (frame) frame.classList.add("is-missing");
+                event.currentTarget.hidden = true;
+              }}
+            />
+            <figcaption>교실 한쪽에 바로 놓고 시작</figcaption>
+          </figure>
         </div>
       </div>
     </section>

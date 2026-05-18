@@ -1,7 +1,10 @@
 function CTAForm() {
-  const contactEmail = "hello@engkey.kr";
+  const contactEmail = "chadoli28@naver.com";
+  const kakaoChannelUrl = "#";
+  const formEndpoint = `https://formsubmit.co/ajax/${contactEmail}`;
   const [form, setForm] = React.useState({ name: "", org: "", role: "원장", phone: "", email: "", students: "", message: "" });
   const [errors, setErrors] = React.useState({});
+  const [formError, setFormError] = React.useState("");
   const [submitted, setSubmitted] = React.useState(false);
   const [submitting, setSubmitting] = React.useState(false);
 
@@ -17,36 +20,46 @@ function CTAForm() {
     return e;
   };
 
-  const buildMailto = () => {
-    const subject = `[Engkey 데모 신청] ${form.org}`;
-    const body = [
-      "Engkey 무료 데모를 신청합니다.",
-      "",
-      `이름: ${form.name}`,
-      `역할: ${form.role}`,
-      `기관명: ${form.org}`,
-      `연락처: ${form.phone}`,
-      `이메일: ${form.email || "-"}`,
-      `예상 학생 수: ${form.students || "-"}`,
-      "",
-      "문의 내용:",
-      form.message || "-",
-    ].join("\n");
-
-    return `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  };
-
-  const onSubmit = (ev) => {
+  const onSubmit = async (ev) => {
     ev.preventDefault();
     const e = validate();
     setErrors(e);
+    setFormError("");
     if (Object.keys(e).length > 0) return;
     setSubmitting(true);
-    window.location.href = buildMailto();
-    setTimeout(() => {
-      setSubmitting(false);
+
+    const payload = {
+      _subject: `[Engkey 무료 데모 신청] ${form.org}`,
+      _template: "table",
+      _captcha: "false",
+      이름: form.name,
+      역할: form.role,
+      기관명: form.org,
+      연락처: form.phone,
+      이메일: form.email || "-",
+      "예상 학생 수": form.students || "-",
+      "문의 내용": form.message || "-",
+    };
+
+    if (form.email) payload._replyto = form.email;
+
+    try {
+      const response = await fetch(formEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data.success === false) throw new Error(data.message || "전송 실패");
       setSubmitted(true);
-    }, 500);
+    } catch (err) {
+      setFormError("신청 전송 중 문제가 발생했습니다. 카카오채널 또는 이메일로 직접 문의해주세요.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -63,53 +76,54 @@ function CTAForm() {
             평균 1~2일 이내 담당자가 연락드립니다.
           </p>
           <div className="cta__channels">
-            <a className="cta__channel" href={`mailto:${contactEmail}?subject=${encodeURIComponent("Engkey 상담 요청")}`}>
+            <a className="cta__channel" href={kakaoChannelUrl}>
               <div className="ico"><Icon name="chat" size={20}/></div>
               <div>
-                <strong>빠른 상담 요청</strong>
-                <small>기관 정보를 남겨주시면 순차적으로 연락드립니다</small>
+                <strong>카카오채널 문의</strong>
+                <small>채널 채팅으로 빠르게 문의하기</small>
               </div>
             </a>
             <a className="cta__channel" href={`mailto:${contactEmail}`}>
               <div className="ico"><Icon name="mail" size={20}/></div>
               <div>
-                <strong>이메일</strong>
+                <strong>이메일 문의</strong>
                 <small>{contactEmail}</small>
               </div>
             </a>
-            <a className="cta__channel" href="tel:+8215001234">
-              <div className="ico"><Icon name="phone" size={20}/></div>
+            <a className="cta__channel" href="#demo-form">
+              <div className="ico"><Icon name="chat" size={20}/></div>
               <div>
-                <strong>전화 상담</strong>
-                <small>1500-1234 · 평일 10:00–17:00</small>
+                <strong>문의폼</strong>
+                <small>무료 데모 신청 내용을 남기기</small>
               </div>
             </a>
           </div>
         </div>
 
-        <form className="form reveal" onSubmit={onSubmit} noValidate>
+        <form className="form reveal" id="demo-form" onSubmit={onSubmit} noValidate>
           {submitted ? (
             <>
-              <h3>메일 앱이 열렸습니다</h3>
-              <p className="form__sub">작성된 신청 내용을 확인한 뒤 메일 앱에서 전송해주세요. 메일 전송이 어려우면 아래 주소로 직접 보내주셔도 됩니다.</p>
+              <h3>무료 데모 신청이 접수되었습니다</h3>
+              <p className="form__sub">남겨주신 내용은 {contactEmail}로 전송됩니다. 확인 후 순차적으로 연락드리겠습니다.</p>
               <div className="form__success">
                 <Icon name="check" size={18} style={{verticalAlign: "-3px", marginRight: 6}}/>
-                {contactEmail}
+                추가 문의는 카카오채널 또는 이메일로 보내주세요.
               </div>
             </>
           ) : (
             <>
               <h3>무료 데모 신청</h3>
               <p className="form__sub">아래 정보를 남겨주시면 시연 일정과 견적을 안내해 드립니다.</p>
+              {formError && <div className="form__success form__success--error">{formError}</div>}
               <div className="form__row">
                 <div className="form__field">
                   <label>이름<span className="req">*</span></label>
-                  <input value={form.name} onChange={set("name")} placeholder="홍길동" />
+                  <input name="name" value={form.name} onChange={set("name")} placeholder="홍길동" />
                   {errors.name && <span className="err">{errors.name}</span>}
                 </div>
                 <div className="form__field">
                   <label>역할<span className="req">*</span></label>
-                  <select value={form.role} onChange={set("role")}>
+                  <select name="role" value={form.role} onChange={set("role")}>
                     <option>원장</option>
                     <option>교사</option>
                     <option>운영 담당자</option>
@@ -120,24 +134,24 @@ function CTAForm() {
               </div>
               <div className="form__field">
                 <label>기관명<span className="req">*</span></label>
-                <input value={form.org} onChange={set("org")} placeholder="OO유치원 / OO어린이집" />
+                <input name="organization" value={form.org} onChange={set("org")} placeholder="OO유치원 / OO어린이집" />
                 {errors.org && <span className="err">{errors.org}</span>}
               </div>
               <div className="form__row">
                 <div className="form__field">
                   <label>연락처<span className="req">*</span></label>
-                  <input value={form.phone} onChange={set("phone")} placeholder="010-0000-0000" />
+                  <input name="phone" type="tel" value={form.phone} onChange={set("phone")} placeholder="010-0000-0000" />
                   {errors.phone && <span className="err">{errors.phone}</span>}
                 </div>
                 <div className="form__field">
                   <label>이메일</label>
-                  <input value={form.email} onChange={set("email")} placeholder="hello@example.com" />
+                  <input name="email" type="email" value={form.email} onChange={set("email")} placeholder="hello@example.com" />
                   {errors.email && <span className="err">{errors.email}</span>}
                 </div>
               </div>
               <div className="form__field">
                 <label>예상 학생 수</label>
-                <select value={form.students} onChange={set("students")}>
+                <select name="students" value={form.students} onChange={set("students")}>
                   <option value="">선택해주세요</option>
                   <option>10명 이하</option>
                   <option>11–30명</option>
@@ -148,11 +162,11 @@ function CTAForm() {
               </div>
               <div className="form__field">
                 <label>문의 내용</label>
-                <textarea value={form.message} onChange={set("message")}
+                <textarea name="message" value={form.message} onChange={set("message")}
                   placeholder="도입 시기, 운영 환경, 특별히 궁금한 점 등을 자유롭게 적어주세요." />
               </div>
               <button type="submit" className="form__submit" disabled={submitting}>
-                {submitting ? "메일 앱 여는 중..." : "무료 데모 신청 메일 작성하기"}
+                {submitting ? "신청 전송 중..." : "무료 데모 신청하기"}
               </button>
             </>
           )}

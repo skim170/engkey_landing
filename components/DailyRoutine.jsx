@@ -81,6 +81,26 @@ function DailyRoutine() {
           </div>
         </div>
 
+        <div className="routine__proof reveal">
+          <figure className="routine__proof-photo" aria-label="아이가 Engkey 태블릿 키오스크를 실제로 사용하는 모습">
+            <img
+              src="assets/images/kid_use-display.jpg"
+              alt="아이가 Engkey 태블릿 키오스크를 실제로 사용하는 뒷모습"
+              loading="lazy"
+              onError={(event) => {
+                const frame = event.currentTarget.closest(".routine__proof-photo");
+                if (frame) frame.classList.add("is-missing");
+                event.currentTarget.hidden = true;
+              }}
+            />
+          </figure>
+          <div className="routine__proof-text">
+            <span className="eyebrow">Real Use</span>
+            <h3>아이 혼자서도 매일 스스로 시작합니다</h3>
+            <p>이름 카드 터치 한 번으로 학습이 시작되어, 선생님이 바쁠 때도 아이들이 스스로 루틴을 이어갑니다.</p>
+          </div>
+        </div>
+
         <figure className="routine-scene reveal" aria-label="Children using Engkey together in class">
           <div className="routine-scene__fallback" aria-hidden="true">
             <div className="routine-scene__window"></div>
