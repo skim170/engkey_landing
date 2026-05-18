@@ -20,9 +20,9 @@ python -m http.server 8000
 
 ## 수정 포인트
 
-- 문의 수신 이메일: `components/CTAForm.jsx`의 `contactEmail`
+- 문의 수신 이메일: `form-config.js`의 `contactEmail`
 - 카카오채널 링크: `components/CTAForm.jsx`와 `components/Footer.jsx`의 `kakaoChannelUrl`
-- 무료 데모 신청 폼: `components/CTAForm.jsx`에서 FormSubmit AJAX 엔드포인트로 전송됩니다. 최초 제출 후 `contactEmail`로 도착하는 확인 메일을 승인해야 이후 신청 메일이 정상 수신됩니다.
+- 무료 데모 신청 폼: 기본값은 `form-config.js`의 `formProvider: "formspree"`입니다. Formspree에서 발급받은 `https://formspree.io/f/YOUR_FORM_ID` 형식의 엔드포인트를 `formEndpoint`에 넣으면 됩니다. Getform은 `https://getform.io/f/YOUR_FORM_ID` 형식을 사용할 수 있고, FormSubmit으로 되돌리려면 `formProvider: "formsubmit"`으로 바꾸면 됩니다.
 - 푸터 링크: `components/Footer.jsx`
 - 투명 배경 로고: `assets/logos`
 - 원본 로고: `assets/raw`

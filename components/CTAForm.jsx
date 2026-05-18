@@ -1,14 +1,47 @@
 function CTAForm() {
-  const contactEmail = "chadoli28@naver.com";
+  const formConfig = window.ENGKEY_FORM_CONFIG || {};
+  const contactEmail = formConfig.contactEmail || "ok31803238@gmail.com";
   const kakaoChannelUrl = "#";
-  const formEndpoint = `https://formsubmit.co/ajax/${contactEmail}`;
+  const formProvider = (formConfig.formProvider || "formspree").trim().toLowerCase();
+  const configuredEndpoint = (formConfig.formEndpoint || "").trim();
+  const formEndpoint = formProvider === "web3forms"
+    ? "https://api.web3forms.com/submit"
+    : formProvider === "formsubmit"
+      ? `https://formsubmit.co/ajax/${contactEmail}`
+      : configuredEndpoint;
+  const web3FormsAccessKey = (formConfig.web3FormsAccessKey || "").trim();
+  const isPlaceholderEndpoint = !configuredEndpoint || /YOUR_|your_/i.test(configuredEndpoint);
+  const isFormConfigured = formProvider === "web3forms"
+    ? Boolean(web3FormsAccessKey)
+    : formProvider === "formsubmit" || !isPlaceholderEndpoint;
   const [form, setForm] = React.useState({ name: "", org: "", role: "원장", phone: "", email: "", students: "", message: "" });
   const [errors, setErrors] = React.useState({});
   const [formError, setFormError] = React.useState("");
   const [submitted, setSubmitted] = React.useState(false);
   const [submitting, setSubmitting] = React.useState(false);
+  const [showMailFallback, setShowMailFallback] = React.useState(false);
 
-  const set = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }));
+  const set = (k) => (e) => {
+    setForm(f => ({ ...f, [k]: e.target.value }));
+    setFormError("");
+    setShowMailFallback(false);
+  };
+
+  const mailSubject = `[Engkey 무료 데모 신청] ${form.org.trim() || "문의"}`;
+  const mailBody = [
+    "무료 데모 신청 정보",
+    "",
+    `이름: ${form.name || "-"}`,
+    `역할: ${form.role || "-"}`,
+    `기관명: ${form.org || "-"}`,
+    `연락처: ${form.phone || "-"}`,
+    `이메일: ${form.email || "-"}`,
+    `예상 학생 수: ${form.students || "-"}`,
+    "",
+    "문의 내용:",
+    form.message || "-",
+  ].join("\n");
+  const mailtoHref = `mailto:${contactEmail}?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
 
   const validate = () => {
     const e = {};
@@ -25,13 +58,23 @@ function CTAForm() {
     const e = validate();
     setErrors(e);
     setFormError("");
+    setShowMailFallback(false);
     if (Object.keys(e).length > 0) return;
+
+    if (!isFormConfigured) {
+      setShowMailFallback(true);
+      setFormError("폼 전송 설정이 아직 완료되지 않았습니다. 아래 버튼으로 입력한 내용을 이메일 앱에서 바로 보낼 수 있습니다.");
+      return;
+    }
+
     setSubmitting(true);
 
     const payload = {
-      _subject: `[Engkey 무료 데모 신청] ${form.org}`,
-      _template: "table",
-      _captcha: "false",
+      subject: mailSubject,
+      name: form.name,
+      email: form.email || "",
+      phone: form.phone,
+      message: form.message || "-",
       이름: form.name,
       역할: form.role,
       기관명: form.org,
@@ -41,7 +84,22 @@ function CTAForm() {
       "문의 내용": form.message || "-",
     };
 
-    if (form.email) payload._replyto = form.email;
+    if (formProvider === "formsubmit") {
+      payload._subject = mailSubject;
+      payload._template = "table";
+      payload._captcha = "false";
+    }
+
+    if (formProvider === "web3forms") {
+      payload.access_key = web3FormsAccessKey;
+      payload.from_name = "Engkey Landing";
+      payload.botcheck = "";
+    }
+
+    if (form.email) {
+      payload.replyto = form.email;
+      payload._replyto = form.email;
+    }
 
     try {
       const response = await fetch(formEndpoint, {
@@ -56,7 +114,8 @@ function CTAForm() {
       if (!response.ok || data.success === false) throw new Error(data.message || "전송 실패");
       setSubmitted(true);
     } catch (err) {
-      setFormError("신청 전송 중 문제가 발생했습니다. 카카오채널 또는 이메일로 직접 문의해주세요.");
+      setShowMailFallback(true);
+      setFormError("전송 서비스 응답이 원활하지 않습니다. 아래 버튼으로 입력한 내용을 이메일 앱에서 바로 보낼 수 있습니다.");
     } finally {
       setSubmitting(false);
     }
@@ -114,7 +173,16 @@ function CTAForm() {
             <>
               <h3>무료 데모 신청</h3>
               <p className="form__sub">아래 정보를 남겨주시면 시연 일정과 견적을 안내해 드립니다.</p>
-              {formError && <div className="form__success form__success--error">{formError}</div>}
+              {formError && (
+                <div className="form__success form__success--error" aria-live="polite">
+                  <span>{formError}</span>
+                  {showMailFallback && (
+                    <a className="form__errorAction" href={mailtoHref}>
+                      입력 내용으로 이메일 보내기
+                    </a>
+                  )}
+                </div>
+              )}
               <div className="form__row">
                 <div className="form__field">
                   <label>이름<span className="req">*</span></label>

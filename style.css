@@ -2422,6 +2422,25 @@ a { color: inherit; text-decoration: none; }
   border-color: #F2B5CA;
   margin-bottom: 16px;
 }
+.form__success--error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.form__errorAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: var(--radius-pill);
+  background: #9F2D58;
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+}
+.form__errorAction:hover { background: #812447; }
 @media (max-width: 880px) {
   .cta__layout { grid-template-columns: 1fr; }
   .form__row { grid-template-columns: 1fr; }

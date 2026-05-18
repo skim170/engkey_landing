@@ -1,5 +1,5 @@
 function Footer() {
-  const contactEmail = "chadoli28@naver.com";
+  const contactEmail = (window.ENGKEY_FORM_CONFIG && window.ENGKEY_FORM_CONFIG.contactEmail) || "ok31803238@gmail.com";
   const kakaoChannelUrl = "#";
 
   return (
