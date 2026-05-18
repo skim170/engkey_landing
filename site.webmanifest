@@ -1,0 +1,19 @@
+{
+  "name": "Engkey",
+  "short_name": "Engkey",
+  "description": "유치원과 어린이집 5~7세 아이를 위한 매일 듣고 말하는 영어 학습 키오스크",
+  "lang": "ko-KR",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#FFF8E6",
+  "theme_color": "#6D4BD8",
+  "icons": [
+    {
+      "src": "assets/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

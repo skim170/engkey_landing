@@ -17,18 +17,20 @@ function App() {
   return (
     <>
       <Nav />
-      <Hero />
-      <Problem />
-      <Features />
-      <DailyRoutine />
-      <HowItWorks />
-      <MarketDay />
-      <Pricing />
-      <ProofAssets />
-      <Gallery />
-      <AgeTabs />
-      <FAQ />
-      <CTAForm />
+      <main id="main-content">
+        <Hero />
+        <Problem />
+        <Features />
+        <DailyRoutine />
+        <HowItWorks />
+        <MarketDay />
+        <Pricing />
+        <ProofAssets />
+        <Gallery />
+        <AgeTabs />
+        <FAQ />
+        <CTAForm />
+      </main>
       <Footer />
     </>
   );

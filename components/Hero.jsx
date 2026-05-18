@@ -36,7 +36,7 @@ function Hero() {
         </div>
 
         <div className="hero__visual hero__visual--scene">
-          <figure className="hero-photo" aria-label="Children using Engkey on a classroom tablet">
+          <figure className="hero-photo" aria-label="교실에서 Engkey 태블릿 키오스크를 사용하는 아이들">
             <div className="hero-photo__fallback" aria-hidden="true">
               <div className="hero-photo__tablet">
                 <span></span>
@@ -47,7 +47,7 @@ function Hero() {
             <img
               className="hero-photo__image"
               src="assets/images/engkey-hero-kids.png"
-              alt="Children using Engkey on a tablet in a bright classroom"
+              alt="밝은 교실에서 Engkey 태블릿 키오스크로 영어를 학습하는 아이들"
               loading="eager"
               onError={(event) => {
                 const frame = event.currentTarget.closest(".hero-photo");

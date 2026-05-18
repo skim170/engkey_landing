@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://www.engkey.net/</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.engkey.net/assets/images/engkey-hero-kids.png</image:loc>
+      <image:title>Engkey 유치원 어린이집 영어 학습 키오스크</image:title>
+      <image:caption>5~7세 아이들이 교실에서 Engkey 태블릿 키오스크로 매일 영어를 듣고 말하는 모습</image:caption>
+    </image:image>
+  </url>
+</urlset>

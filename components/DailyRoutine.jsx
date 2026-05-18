@@ -101,14 +101,14 @@ function DailyRoutine() {
           </div>
         </div>
 
-        <figure className="routine-scene reveal" aria-label="Children using Engkey together in class">
+        <figure className="routine-scene reveal" aria-label="교실에서 함께 Engkey를 사용하는 아이들">
           <div className="routine-scene__fallback" aria-hidden="true">
             <div className="routine-scene__window"></div>
             <div className="routine-scene__table"></div>
           </div>
           <img
             src="assets/images/engkey-classroom-routine.png"
-            alt="Children gathered around a tablet during an Engkey classroom routine"
+            alt="교실에서 태블릿을 중심으로 모여 Engkey 영어 루틴을 진행하는 아이들"
             loading="lazy"
             onError={(event) => {
               const frame = event.currentTarget.closest(".routine-scene");

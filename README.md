@@ -18,6 +18,12 @@ python -m http.server 8000
 4. Branch는 `main`, folder는 `/root`를 선택하고 저장합니다.
 5. 배포가 끝나면 `https://계정명.github.io/저장소명/`에서 확인합니다.
 
+## SEO 설정
+
+- 현재 canonical URL, Open Graph URL, sitemap URL은 `https://www.engkey.net/` 기준입니다. 커스텀 도메인을 바꾸면 `index.html`, `sitemap.xml`, `robots.txt`의 URL을 새 도메인으로 바꿔주세요.
+- Google Search Console과 네이버 서치어드바이저에 배포 URL을 등록한 뒤 `sitemap.xml`을 제출합니다.
+- 네이버 소유 확인 메타 태그를 발급받으면 `index.html`의 `<head>` 안에 추가합니다.
+
 ## 수정 포인트
 
 - 문의 수신 이메일: `form-config.js`의 `contactEmail`
