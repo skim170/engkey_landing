@@ -24,6 +24,11 @@ python -m http.server 8000
 - Google Search Console과 네이버 서치어드바이저에 배포 URL을 등록한 뒤 `sitemap.xml`을 제출합니다.
 - 네이버 소유 확인 메타 태그를 발급받으면 `index.html`의 `<head>` 안에 추가합니다.
 
+## Google Analytics
+
+- GA4 측정 ID를 발급받은 뒤 `analytics-config.js`의 `googleAnalyticsMeasurementId`에 `G-XXXXXXXXXX` 형식으로 입력합니다.
+- `analytics.js`는 초기 페이지뷰, 해시 섹션 이동 페이지뷰, CTA 클릭, 이메일/카카오 채널 클릭, 무료 데모 신청 성공(`generate_lead`) 이벤트를 전송합니다.
+
 ## 수정 포인트
 
 - 문의 수신 이메일: `form-config.js`의 `contactEmail`

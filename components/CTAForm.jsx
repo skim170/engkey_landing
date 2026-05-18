@@ -112,6 +112,12 @@ function CTAForm() {
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok || data.success === false) throw new Error(data.message || "전송 실패");
+      if (typeof window.engkeyTrackEvent === "function") {
+        window.engkeyTrackEvent("generate_lead", {
+          form_provider: formProvider,
+          form_id: "demo-form",
+        });
+      }
       setSubmitted(true);
     } catch (err) {
       setShowMailFallback(true);
